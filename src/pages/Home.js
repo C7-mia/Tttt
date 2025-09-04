@@ -1,28 +1,19 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "axios";
-
-// Components
-import Header from "./components/Header.jsx";
-import Navbar from "./components/Navbar.jsx";
-import MovieDetails from "./components/MovieDetails.jsx";
-
-// Pages
-import Home from "./pages/Home.jsx";
-import Movies from "./pages/Movies.jsx";
-import Favorites from "./pages/Favorites.jsx";
-import About from "./pages/About.jsx";
+import SearchBar from "../components/SearchBar.jsx";
+import MovieCard from "../components/MovieCard.jsx";
+import MovieDetails from "../components/MovieDetails.jsx";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
-function App() {
+export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [error, setError] = useState("");
 
-  // 🔍 Search movies globally
+  // 🔍 Search movies
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!searchTerm) return;
@@ -55,45 +46,38 @@ function App() {
   };
 
   return (
-    <Router>
-      {/* Global Header + Navbar */}
-      <Header
+    <div className="container mx-auto p-4">
+      <h1 className="text-4xl font-bold text-center my-6">🎬 Movie Cloudie</h1>
+      <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         handleSearch={handleSearch}
       />
-      <Navbar />
+      {error && <p className="text-center text-red-500">{error}</p>}
 
-      {/* Routes */}
-      <main className="p-4">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                movies={movies}
-                error={error}
-                handleMovieClick={handleMovieClick}
-                selectedMovie={selectedMovie}
-                setSelectedMovie={setSelectedMovie}
-              />
-            }
+      {/* Movies Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {movies.map((movie) => (
+          <MovieCard
+            key={movie.id}
+            movie={{
+              id: movie.id,
+              title: movie.title,
+              poster_path: movie.poster_path,
+              release_date: movie.release_date,
+            }}
+            onClick={handleMovieClick}
           />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </main>
+        ))}
+      </div>
 
-      {/* Movie Details Modal */}
+      {/* Movie Details */}
       {selectedMovie && (
         <MovieDetails
           movie={selectedMovie}
           onClose={() => setSelectedMovie(null)}
         />
       )}
-    </Router>
+    </div>
   );
 }
-
-export default App;
