@@ -11,7 +11,6 @@ export default function Movies() {
   const [error, setError] = useState("");
   const [selectedMovie, setSelectedMovie] = useState(null);
 
-  // Fetch popular movies on mount
   useEffect(() => {
     const fetchPopularMovies = async () => {
       try {
@@ -28,7 +27,6 @@ export default function Movies() {
     fetchPopularMovies();
   }, []);
 
-  // Fetch movie details when clicked
   const handleMovieClick = async (movieId) => {
     try {
       const response = await axios.get(
@@ -67,7 +65,6 @@ export default function Movies() {
         )}
       </div>
 
-      {/* Movie Details Modal */}
       {selectedMovie && (
         <MovieDetails
           movie={selectedMovie}
@@ -76,4 +73,4 @@ export default function Movies() {
       )}
     </div>
   );
-}
+          }
