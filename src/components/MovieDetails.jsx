@@ -7,8 +7,7 @@ export default function MovieDetails({ movie, onClose }) {
         <button
           onClick={onClose}
           className="absolute top-2 right-2 text-gray-600 hover:text-black"
-        >
-          ✖
+        >     
         </button>
         <div className="flex flex-col md:flex-row gap-6">
           {movie.poster_path && (
@@ -24,7 +23,7 @@ export default function MovieDetails({ movie, onClose }) {
               Release Date: {movie.release_date || "N/A"}
             </p>
             <p className="text-gray-600 mb-2">
-              Rating: ⭐ {movie.vote_average || "N/A"}
+              Rating:  {movie.vote_average || "N/A"}
             </p>
             <p className="text-gray-800">{movie.overview || "No description available."}</p>
           </div>
