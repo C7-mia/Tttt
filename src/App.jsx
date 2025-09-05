@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "axios";
 
-// Components
 import Header from "./components/Header.jsx";
 import Navbar from "./components/Navbar.jsx";
 import MovieDetails from "./components/MovieDetails.jsx";
 
-// Pages
 import Home from "./pages/Home.jsx";
 import Movies from "./pages/Movies.jsx";
 import Favorites from "./pages/Favorites.jsx";
@@ -22,13 +20,14 @@ function App() {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [error, setError] = useState("");
 
-  // 🔍 Search movies globally
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!searchTerm) return;
     try {
       const response = await axios.get(
-        `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(searchTerm)}`
+        `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
+          searchTerm
+        )}`
       );
       if (response.data.results.length > 0) {
         setMovies(response.data.results);
@@ -42,7 +41,6 @@ function App() {
     }
   };
 
-  // 🎬 Fetch movie details
   const handleMovieClick = async (movieId) => {
     try {
       const response = await axios.get(
@@ -56,7 +54,6 @@ function App() {
 
   return (
     <Router>
-      {/* Global Header + Navbar */}
       <Header
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -64,7 +61,6 @@ function App() {
       />
       <Navbar />
 
-      {/* Routes */}
       <main className="p-4">
         <Routes>
           <Route
@@ -85,7 +81,6 @@ function App() {
         </Routes>
       </main>
 
-      {/* Movie Details Modal */}
       {selectedMovie && (
         <MovieDetails
           movie={selectedMovie}
