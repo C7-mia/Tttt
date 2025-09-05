@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 export default function MovieCard({ movie, onClick }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // Load favorite state from localStorage
   useEffect(() => {
     const savedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
     setIsFavorite(savedFavorites.some((fav) => fav.id === movie.id));
@@ -11,7 +10,7 @@ export default function MovieCard({ movie, onClick }) {
 
   // Toggle favorite
   const toggleFavorite = (e) => {
-    e.stopPropagation(); // prevent opening details when clicking ❤️
+    e.stopPropagation();
     const savedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
     if (isFavorite) {
@@ -44,14 +43,13 @@ export default function MovieCard({ movie, onClick }) {
         </div>
       )}
 
-      {/* ❤️ Favorite button */}
+      {/*  Favorite button */}
       <button
         onClick={toggleFavorite}
         className={`absolute top-2 right-2 p-2 rounded-full text-xl ${
           isFavorite ? "bg-red-600 text-white" : "bg-white text-gray-700"
         }`}
       >
-        ❤️
       </button>
 
       <div className="p-4">
