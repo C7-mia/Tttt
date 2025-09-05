@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "axios";
 
-import Header from "./components/Header.jsx";
+import Header from "./components/Header.";
 import Navbar from "./components/Navbar.jsx";
 import MovieDetails from "./components/MovieDetails.jsx";
 
